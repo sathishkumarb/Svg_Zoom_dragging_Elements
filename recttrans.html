@@ -1,0 +1,72 @@
+<head>
+    <style>
+      #spectrum {
+                border: 1px solid #aaa;  
+            } 
+    </style>
+    
+<script src="jquery-1.12.1"></script>
+<script src="raphael.js"></script>
+<script>
+$(function() {
+    var scale = 1,
+        canvasW = 569,
+        canvasH = 256;
+        
+     var width = 100,
+        height = 100,
+        x0 = (canvasW*scale/2) + (width/2),
+        y0 = (canvasH*scale/2) - (height/2);
+        
+    var resizerBlanketRadius = 25,
+        resizerRadius = 5;
+                       
+    var Spectrum = {};
+    
+    Spectrum.paper                 = Raphael('spectrum', canvasW*scale, canvasH*scale);
+    Spectrum.rect                 = Spectrum.paper.rect(x0, y0, width, height);
+    Spectrum.resizer             = Spectrum.paper.circle(x0 + width, y0 + height, resizerRadius);
+    Spectrum.resizerBlanket     = Spectrum.paper.circle(x0 + width, y0 + height, resizerBlanketRadius);
+    
+    Spectrum.rect.attr({fill: 'red'});
+    Spectrum.resizerBlanket.attr({fill: 'yellow', opacity:0});
+    Spectrum.resizer.attr({fill:'green'});
+    
+    Spectrum.rect.drag(
+        function(dx, dy, x, y) {
+            this.attr({x: this.ox + dx, y: this.oy + dy});
+            Spectrum.resizerBlanket.attr({cx: this.rbox + dx, cy: this.rboy + dy});
+            Spectrum.resizer.attr({cx: this.rox + dx, cy: this.roy + dy});  
+        },
+        function() {
+            this.ox = this.attr("x");
+            this.oy = this.attr("y");
+            this.rbox = Spectrum.resizerBlanket.attr('cx');
+            this.rboy = Spectrum.resizerBlanket.attr('cy');
+            this.rox = Spectrum.resizer.attr('cx');
+            this.roy = Spectrum.resizer.attr('cy');
+        }
+    )
+    
+    Spectrum.resizerBlanket.drag(
+        function(dx, dy) {
+            this.attr({cx: this.ox + dx, cy: this.oy + dy});
+            Spectrum.resizer.attr({cx: this.rox + dx, cy: this.roy + dy});  
+            Spectrum.rect.attr({width: this.rwidth + dx, height: this.rheight + dy});
+        },
+        function() {
+            this.ox = this.attr('cx');
+            this.oy = this.attr('cy');
+            this.rox = Spectrum.resizer.attr('cx');
+            this.roy = Spectrum.resizer.attr('cy');
+            this.rwidth = Spectrum.rect.attr('width');
+            this.rheight = Spectrum.rect.attr('height');
+        }
+    );
+});
+</script>
+</head>
+
+<body>
+    <div id="spectrum"></div>
+</body>

@@ -1,0 +1,4 @@
+define(['jquery','moment','moment.duration-format','domReady!'],function($,moment){function tick(){var $element,time,format;$element=$(this);time=$element.data('count-down');format=$element.data('count-down-format');if(format===undefined){format='hh:mm:ss';}
+if(time>0){time--;}
+$element.text(moment.duration(time,'seconds').format(format,{trim:false}));$element.data('count-down',time);if(time==0){if($element.data('count-down-ended')!==true){$element.data('count-down-ended',true);$element.trigger('countDown:ended');}}else{$element.data('count-down-ended',false);}}
+setInterval(function(){$('[data-count-down]').each(tick);},1000);});

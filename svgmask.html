@@ -1,0 +1,88 @@
+<!doctype html>
+
+<title>Dynamic SVG Mask</title>
+<style>
+  div {
+    width: 800px;
+    height: 800px;
+    background: #000;
+  }
+</style>
+
+<div></div>
+
+<script type="text/javascript">
+  function Spotlight(el, radius){
+    this.x = 0;
+    this.y = 0;
+    this.radius = radius || 0;
+
+    this.el = el;
+    this.el.addEventListener('mousemove', this.move.bind(this), false);
+    this.el.addEventListener("touchmove", this.touchMove.bind(this), false);
+  }
+  Spotlight.prototype = {
+    move: function(e){
+      this.set({
+        x: e.clientX + window.scrollX,
+        y: e.clientY + window.scrollY
+      });
+    },
+    touchMove: function(e){
+      e.preventDefault();
+      var touch = e.targetTouches[0];
+      if(touch){
+        this.set({
+          x: touch.clientX + window.scrollX,
+          y: touch.clientY + window.scrollY
+        });
+      }
+    },
+    set: function(cords){
+      this.x = cords.x;
+      this.y = cords.y;
+
+      this.update();
+    },
+    update: function(){
+      this.el.setAttribute('style', '-webkit-mask-image: url("data:image/svg+xml;utf8,'+this.svg()+'");');
+    },
+    svg: function(){
+      var x = this.x,
+          y = this.y,
+          r = this.radius;
+
+      return "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>"
+        + "<circle cx='"+x+"' cy='"+y+"' r='"+r+"' style='fill:#000000'/>"
+        + "</svg>";
+    }
+
+  };
+  window.addEventListener('DOMContentLoaded', function(){
+    var s = new Spotlight(document.getElementsByTagName('div')[0], 100);
+  }, false);
+
+  // Borrowed from MDN bind docs.
+  // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+  if (!Function.prototype.bind) {
+    Function.prototype.bind = function (oThis) {
+      if (typeof this !== "function") {
+        // closest thing possible to the ECMAScript 5 internal IsCallable function
+        throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+      }
+
+      var aArgs = Array.prototype.slice.call(arguments, 1), 
+          fToBind = this, 
+          fNOP = function () {},
+          fBound = function () {
+            return fToBind.apply(this instanceof fNOP ? this : oThis || window,
+                                 aArgs.concat(Array.prototype.slice.call(arguments)));
+          };
+
+      fNOP.prototype = this.prototype;
+      fBound.prototype = new fNOP();
+
+      return fBound;
+    };
+  }
+</script>

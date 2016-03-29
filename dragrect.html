@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <style type="text/css">
+svg {
+  border: solid 1px #aaa;
+}
+
+#checks {
+  margin: 10px;
+}
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
+    <script>
+    
+    </script>
+    <script type="text/javascript" src="dragrect.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <div id="checks">
+    	X-axis:<input type="checkbox" id="xChecked" checked/>
+    	Y-axis:<input type="checkbox" id="yChecked" checked/>
+    </div>
+
+    <script>
+$('#xChecked').click(function() {
+    isXChecked = !isXChecked;
+     dragbarleft 
+        .attr("fill-opacity", (isXChecked ? 0.5 : 0))
+        .attr("cursor", (isXChecked ? "ew-resize" : "move"));
+     dragbarright 
+        .attr("fill-opacity", (isXChecked ? 0.5 : 0))
+        .attr("cursor", (isXChecked ? "ew-resize" : "move"));
+});
+
+$('#yChecked').click(function() {
+    isYChecked = !isYChecked;
+     dragbartop 
+        .attr("fill-opacity", (isYChecked ? 0.5 : 0))
+        .attr("cursor", (isYChecked ? "ns-resize" : "move"));
+     dragbarbottom 
+        .attr("fill-opacity", (isYChecked ? 0.5 : 0))
+        .attr("cursor", (isYChecked ? "ns-resize" : "move"));
+});
+    </script>
+  </body>
+</html>

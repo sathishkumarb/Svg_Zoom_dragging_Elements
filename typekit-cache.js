@@ -1,0 +1,5 @@
+(function(document,proto,storage,key,domain,cached,style,setAttribute){if(navigator.userAgent.match(/MSIE\s/)){return;}
+if(!storage)return;cached=storage[key];if(cached){if(/url\(\//.test(cached)){cached=storage[key]=cached.replace(/url\(\//g,'url('+domain+'/');}
+style=document.createElement('style');style.innerHTML=cached;document.getElementsByTagName('head')[0].appendChild(style);}
+setAttribute=proto.setAttribute;proto.setAttribute=function(name,url,xhr,css){if(typeof url==='string'&&url.indexOf(domain)>-1){xhr=new XMLHttpRequest();xhr.open('GET',url,true);xhr.onreadystatechange=function(){if(xhr.readyState===4){css=xhr.responseText.replace(/url\(\//g,'url('+domain+'/');if(css!==cached)storage[key]=css;}};xhr.send(null);proto.setAttribute=setAttribute;if(cached)return;}
+setAttribute.apply(this,arguments);};})(document,Element.prototype,localStorage,'tk','https://use.typekit.net');

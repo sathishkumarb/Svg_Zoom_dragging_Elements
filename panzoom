@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <script src="jquery-1.12.1.js"></script>
+    <script src="svg-pan-zoom.js"></script>
+    <link rel="stylesheet" href="d3selection.css">
+  </head>
+
+  <body>
+    <h1>Demo for svg-pan-zoom: Zooming just one SVG layer</h1>
+
+
+    <!--div id="container" style="width: 700px; height: 600px; border:1px solid black; ">
+
+        <svg version="1.1" id="Silver_A" style="display: inline; width: inherit; min-width: inherit; max-width: inherit; height: inherit; min-height: inherit; max-height: inherit;" version="1.1">
+
+       
+
+            
+        <style type="text/css">
+            .st0{fill:#FFFFFF;}
+            .st1{fill:none;stroke:#000000;stroke-miterlimit:10;}
+        </style>
+        
+
+            <g i:extraneous="self" class="svg-pan-zoom_viewport">
+                <g>
+                    <path class="st0" d="M3.8,29.9c0,5,4,9,9,9h18c5,0,9-4,9-9v-18c0-5-4-9-9-9h-18c-5,0-9,4-9,9V29.9z"/>
+                    <path class="st1" d="M3.8,29.9c0,5,4,9,9,9h18c5,0,9-4,9-9v-18c0-5-4-9-9-9h-18c-5,0-9,4-9,9V29.9z"/>
+                </g>
+                <g>
+                    <path class="st0" d="M41.1,29.9c0,5,4,9,9,9h18c5,0,9-4,9-9v-18c0-5-4-9-9-9h-18c-5,0-9,4-9,9V29.9z"/>
+                    <path class="st1" d="M41.1,29.9c0,5,4,9,9,9h18c5,0,9-4,9-9v-18c0-5-4-9-9-9h-18c-5,0-9,4-9,9V29.9z"/>
+                </g>
+                <g>
+                    <path class="st0" d="M76.4,29.9c0,5,4,9,9,9h18c5,0,9-4,9-9v-18c0-5-4-9-9-9h-18c-5,0-9,4-9,9V29.9z"/>
+                    <path class="st1" d="M76.4,29.9c0,5,4,9,9,9h18c5,0,9-4,9-9v-18c0-5-4-9-9-9h-18c-5,0-9,4-9,9V29.9z"/>
+                </g>
+                <g>
+                    <path class="st0" d="M110.4,29.9c0,5,4,9,9,9h18c5,0,9-4,9-9v-18c0-5-4-9-9-9h-18c-5,0-9,4-9,9V29.9z"/>
+                    <path class="st1" d="M110.4,29.9c0,5,4,9,9,9h18c5,0,9-4,9-9v-18c0-5-4-9-9-9h-18c-5,0-9,4-9,9V29.9z"/>
+                </g>
+                
+                <g id="Seats">
+                </g>
+                <g id="Section">
+                </g>
+            </g>
+        
+
+        </svg>
+    </div-->
+
+
+    <!--div class="a">
+    </div-->
+
+  </body>
+
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <!--script src="http://d3js.org/hammer.min.js"></script-->
+  <!--script src="d3selection.js"></script-->
+
+        <script>
+
+         $(function() {
+
+         
+        var eventsHandler;
+
+        eventsHandler = {
+          haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel']
+         , init: function(options) {
+
+            // Prevent moving the page on some devices when panning over SVG
+            //options.svgElement.addEventListener('touchstart', function(e){ e.preventDefault(); });
+            options.svgElement.addEventListener('touchmove', function(e){ e.preventDefault(); });
+          }
+        , destroy: function(){
+            
+          }
+        }
+    
+
+
+          panZoomInstance = svgPanZoom('#svg-pan-zoom_viewport', {
+             panEnabled: true,
+            zoomEnabled: true,
+            controlIconsEnabled: true,
+            fit: true,
+            center: true,
+            minZoom: 0.1,
+            customEventsHandler: eventsHandler
+          });
+          
+          // zoom out
+          panZoomInstance.zoom(0.2)
+
+          $("#move").on("click", function() {
+            // Pan by any values from -80 to 80
+            panZoomInstance.panBy({x: Math.round(Math.random() * 160 - 80), y: Math.round(Math.random() * 160 - 80)})
+          });
+
+
+
+        })
+
+        </script>
+
+        
+
+</html>
+

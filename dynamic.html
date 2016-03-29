@@ -1,0 +1,27 @@
+<h1>Here is an example SVG image:</h1>
+
+<script type="image/svg+xml">
+
+</script>
+  <div id="wrapper"></div>
+
+<script>
+var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+//svg.setAttribute('xlink','http://www.w3.org/1999/xlink');
+svg.setAttribute('width','187');
+svg.setAttribute('height','234');
+
+
+var text = document.createElementNS('ttp://www.w3.org/2000/svg', 'text');
+text.setAttribute('x', '10');
+text.setAttribute('y', '20');
+text.setAttribute('fill', 'red');
+text.textContent = '2dsfksdkfjsdjf;dsfldks';
+
+//svg.appendChild(rect);
+svg.appendChild(text); 
+
+var wp = document.getElementById('wrapper'); 
+wp.appendChild(svg);
+</script>
+
